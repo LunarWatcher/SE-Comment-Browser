@@ -1,0 +1,6 @@
+[submodule "include/spdlog"]
+	path = include/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "lib/stackcpp"]
+	path = lib/stackcpp
+	url = https://github.com/LunarWatcher/stackcpp.git
