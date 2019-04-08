@@ -1,7 +1,9 @@
 FROM ubuntu:18.04
 
+# To fix a Python-related issue
 ENV LANG C.UTF-8
 
+# Grab all the things
 RUN set -ex && \
     sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
     apt-get update && \
@@ -19,20 +21,16 @@ RUN set -ex && \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
     pip3 --version 
 
-# Now, grab the build system
+# Now, grab the build system and compiler
 RUN pip3 install --trusted-host pypi.python.org scons && \
-    apt-get install -y clang-8 lldb-8 lld-8 clang-tools-8 libc++-8-dev libc++abi-8-dev llvm-8-dev llvm-8 
+    apt-get install -y clang-8 lldb-8 lld-8 clang-tools-8 libc++-8-dev libc++abi-8-dev llvm-8-dev llvm-8 gdb
 EXPOSE 80
 
 ENV CXX clang++
 ENV CC clang 
 
-# Start!
-WORKDIR /SE-Comments
-COPY . /SE-Comments
+# Everything is up! Nuke the stuff
 
-# Build
-CMD [ "scons" ]
-
-# Enjoy!
-ENTRYPOINT [ "/usr/bin/bash" ]
+RUN apt-get clean \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*]
