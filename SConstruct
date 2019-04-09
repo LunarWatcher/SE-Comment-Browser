@@ -13,7 +13,7 @@ env.Append(CXXFLAGS="-std=c++17 -pedantic -pedantic-errors -Wall -Wextra -Werror
 
 stackcpp = SConscript("lib/stackcpp/SConstruct")
 env.Append(CPPPATH=[ "include/spdlog/include", "lib/stackcpp/include/", "lib/stackcpp/lib/rapidjson/include" ])
-env.Append(LIBS=[ "stackcpp" ])
+env.Append(LIBS=[ "stackcpp", "boost_system", "boost_iostreams", "pthread", "crypto", "ssl" ])
 env.Append(LIBPATH=[ "lib/stackcpp" ])
 
 env.VariantDir("build/src", "src", duplicate=0)
